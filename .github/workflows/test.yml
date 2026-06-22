@@ -18,10 +18,10 @@ jobs:
       - run: npm install
 
       - name: Start server
-        run: node server.js &
-
-      - name: Wait for server
-        run: sleep 5
+        run: node server.js > server.log 2>&1 &
 
       - name: Run tests
         run: npx mocha tests/*.js --ui tdd --timeout 10000
+
+      - name: Stop server
+        run: pkill -f "node server.js" || true
